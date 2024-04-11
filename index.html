@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loteria Generator</title>
+    <link rel="stylesheet" href="nao_apagar/style.css">
+</head>
+
+<body>
+    <div id="divSelecao" class="geraNumeros">
+        <button class="selecao" onclick="tornarDivGeraNumerosVisivel()">Gera Números</button>
+        <button class="selecao" onclick="tornarDivGeraRankingVisivel()">Gera Ranking</button>
+        <button class="selecao" onclick="tornarDivPegaResultadoVisivel()">Pega Resultados</button>
+    </div>
+
+    <div id="divGeraNumeros" class="geraNumeros">
+        <h2>Loteria Generator</h2>
+        <label for="qtApostas">Quantidade de Apostas:</label>
+        <input type="number" id="qtApostas" min="1" value="1">
+        <label for="qtNumeros">Quantidade de Números por Aposta:</label>
+        <input type="number" id="qtNumeros" min="1" value="6">
+        <label for="opcao">Opção de Geração:</label>
+        <select id="opcao">
+            <option value="1">Números Mais Sorteados</option>
+            <option value="2">Todos os Números</option>
+            <option value="3">Mesclar Opções 1 e 2</option>
+        </select>
+
+        <div id="datas">
+            <p>Deve ser preenchido quando for marcada a opção números mais sorteados</p>
+            <div id="campos" class="campos">
+                <div class="form-group">
+                    <label for="dataInicial">Data Inicial:</label>
+                    <input type="date" id="dataInicial">
+                </div>
+
+                <div class="form-group">
+                    <label for="dataFinal">Data Final:</label>
+                    <input type="date" id="dataFinal">
+                </div>
+            </div>
+            <div id="checkboxAtualiza" class="">
+                <label for="atualiza">atualiza numeros mas sorteados?</label>
+                <input type="checkbox" name="" id="atualiza" checked>
+            </div>
+
+            <!-- Input de arquivo -->
+            <input type="file" id="fileInput" style="display: none;">
+
+            <div id="top30"></div>
+        </div>
+
+        <div class="botoes">
+            <button onclick="gerarApostas()">Gerar Apostas</button>
+        </div>
+        <div id="apostas"></div>
+    </div>
+
+    <div id="pegaResultado" class="geraNumeros" style="display: none;">
+        <h2>Consulta de Resultados da Mega-Sena</h2>
+
+        <div id="data" class="campos">
+            <div class="form-group">
+                <label for="startRange">Início do Intervalo:</label>
+                <input id="startRange" min="1" placeholder="Número inicial da faixa" type="number">
+            </div>
+
+            <div class="form-group">
+                <label for="endRange">Fim do Intervalo:</label>
+                <input id="endRange" min="1" placeholder="Número final da faixa" type="number">
+            </div>
+        </div>
+
+        <div id="botoes" class="botoes">
+            <button onclick="fetchPegaResultado()">Consultar</button>
+            <button class="limpar" onclick="clearResults()">Limpar</button>
+            <button class="copiar" id="copyButton" onclick="copyToClipboard()">Copiar</button>
+        </div>
+
+        <div id="results"></div>
+
+    </div>
+
+    <div id="divRanking" class="geraNumeros" style="display: none;">
+        <h2>Ranking de Dezenas Sorteadas</h2>
+        <div class="campos">
+            <div class="form-group">
+                <label for="dataInicial">Data Inicial:</label>
+                <input type="date" id="dataInicial1">
+            </div>
+            <div class="form-group">
+                <label for="dataFinal">Data Final:</label>
+                <input type="date" id="dataFinal1">
+            </div>
+        </div>
+
+        <div class="botoes">
+            <button onclick="selecionaRanking()">Gerar</button>
+        </div>
+
+        <div class="form-group">
+
+            <div id="rank"></div>
+        </div>
+
+    </div>
+
+   <script src="nao_apagar/script.js"></script>
+
+
+
+</body>
+
+</html>
