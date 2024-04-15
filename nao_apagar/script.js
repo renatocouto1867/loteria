@@ -200,7 +200,7 @@ function fetchPegaResultado() {
         try {
             const response = await fetch(url);
             const data = await response.json();
-            data.dataApuracao = undefined;
+            //data.dataApuracao = undefined;
 
             if (response.ok) {
                 const dataSorteio = data.dataApuracao;
