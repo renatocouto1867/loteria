@@ -305,7 +305,7 @@ function escreveRankingGeral(lista) {
             link.href = window.URL.createObjectURL(blob);
 
             // Define o nome do arquivo a ser baixado
-            link.download = "arquivo.txt";
+            link.download = "Resultados_mega_sena.txt";
 
             // Clica no link para iniciar o download
             link.click();
