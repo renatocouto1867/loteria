@@ -296,3 +296,20 @@ function escreveRankingGeral(lista) {
     // Exibir a tabela do ranking completo na página
     document.getElementById('rank').innerHTML = resultadoHTML;
 }
+ document.getElementById('downloadButton').addEventListener('click', function() {
+            // Cria um objeto Blob com o conteúdo do arquivo
+            var blob = new Blob(["Conteúdo do arquivo a ser baixado"], { type: "text/plain" });
+
+            // Cria um link <a> temporário para o download
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+
+            // Define o nome do arquivo a ser baixado
+            link.download = "arquivo.txt";
+
+            // Clica no link para iniciar o download
+            link.click();
+
+            // Limpa o objeto URL e remove o link temporário
+            window.URL.revokeObjectURL(link.href);
+        });
