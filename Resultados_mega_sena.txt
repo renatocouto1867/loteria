@@ -2706,3 +2706,15 @@ Data sorteio: 26/03/2024; Acumulou: não; Número do Concurso: 2705; Dezenas Sor
 Data sorteio: 30/03/2024; Acumulou: sim; Número do Concurso: 2706; Dezenas Sorteadas: 45, 24, 17, 30, 10, 11
 Data sorteio: 02/04/2024; Acumulou: sim; Número do Concurso: 2707; Dezenas Sorteadas: 39, 09, 11, 54, 07, 57
 Data sorteio: 04/04/2024; Acumulou: sim; Número do Concurso: 2708; Dezenas Sorteadas: 19, 11, 12, 10, 28, 23
+Data sorteio: 06/04/2024; Acumulou: sim; Número do Concurso: 2709; Dezenas Sorteadas: 22, 12, 23, 47, 24, 53
+Data sorteio: 09/04/2024; Acumulou: sim; Número do Concurso: 2710; Dezenas Sorteadas: 44, 50, 25, 42, 05, 06
+Data sorteio: 11/04/2024; Acumulou: sim; Número do Concurso: 2711; Dezenas Sorteadas: 36, 55, 14, 38, 60, 46
+Data sorteio: 13/04/2024; Acumulou: sim; Número do Concurso: 2712; Dezenas Sorteadas: 35, 19, 07, 40, 42, 15
+Data sorteio: 16/04/2024; Acumulou: sim; Número do Concurso: 2713; Dezenas Sorteadas: 58, 09, 23, 35, 25, 26
+Data sorteio: 18/04/2024; Acumulou: sim; Número do Concurso: 2714; Dezenas Sorteadas: 17, 45, 57, 42, 52, 16
+Data sorteio: 20/04/2024; Acumulou: não; Número do Concurso: 2715; Dezenas Sorteadas: 25, 19, 53, 07, 50, 46
+Data sorteio: 23/04/2024; Acumulou: sim; Número do Concurso: 2716; Dezenas Sorteadas: 48, 27, 28, 49, 20, 05
+Data sorteio: 25/04/2024; Acumulou: não; Número do Concurso: 2717; Dezenas Sorteadas: 36, 06, 50, 34, 22, 44
+Data sorteio: 27/04/2024; Acumulou: sim; Número do Concurso: 2718; Dezenas Sorteadas: 41, 34, 59, 46, 30, 06
+Data sorteio: 30/04/2024; Acumulou: sim; Número do Concurso: 2719; Dezenas Sorteadas: 42, 25, 48, 27, 16, 30
+Data sorteio: 04/05/2024; Acumulou: sim; Número do Concurso: 2720; Dezenas Sorteadas: 43, 15, 42, 16, 23, 08
