@@ -296,20 +296,12 @@ function escreveRankingGeral(lista) {
     // Exibir a tabela do ranking completo na página
     document.getElementById('rank').innerHTML = resultadoHTML;
 }
- document.getElementById('downloadButton').addEventListener('click', function() {
-            // Cria um objeto Blob com o conteúdo do arquivo
-            var blob = new Blob(["Conteúdo do arquivo a ser baixado"], { type: "text/plain" });
 
-            // Cria um link <a> temporário para o download
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-
-            // Define o nome do arquivo a ser baixado
-            link.download = "/Resultados_mega_sena.txt";
-
-            // Clica no link para iniciar o download
-            link.click();
-
-            // Limpa o objeto URL e remove o link temporário
-            window.URL.revokeObjectURL(link.href);
-        });
+function baixarArquivo() {
+    var link = document.createElement('a');
+    link.href = 'Resultados_mega_sena.txt';
+    link.download = 'Resultados_mega_sena.txt';
+    document.body.appendChild(link); // Adiciona o link ao corpo do documento
+    link.click(); // Simula um clique no link
+    document.body.removeChild(link); // Remove o link do corpo do documento após o download
+}
