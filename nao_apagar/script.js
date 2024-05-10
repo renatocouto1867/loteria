@@ -8,6 +8,8 @@
         const divPegaResulta = document.getElementById("pegaResultado");
         const divGeraNumeros = document.getElementById("divGeraNumeros");
         const divGeraRanking = document.getElementById("divRanking");
+        const divGeraAjuda = document.getElementById("divAjuda");
+        divGeraAjuda.style.display = "none";
         divGeraNumeros.style.display = "none";
         divGeraRanking.style.display = "none";
         divPegaResulta.style.display = "block"
@@ -17,6 +19,8 @@
         const divPegaResulta = document.getElementById("pegaResultado");
         const divGeraNumeros = document.getElementById("divGeraNumeros");
         const divGeraRanking = document.getElementById("divRanking");
+        const divGeraAjuda = document.getElementById("divAjuda");
+        divGeraAjuda.style.display = "none";
         divGeraNumeros.style.display = "block";
         divGeraRanking.style.display = "none";
         divPegaResulta.style.display = "none"
@@ -26,8 +30,21 @@
         const divPegaResulta = document.getElementById("pegaResultado");
         const divGeraNumeros = document.getElementById("divGeraNumeros");
         const divGeraRanking = document.getElementById("divRanking");
+        const divGeraAjuda = document.getElementById("divAjuda");
+        divGeraAjuda.style.display = "none";
         divGeraNumeros.style.display = "none";
         divGeraRanking.style.display = "block";
+        divPegaResulta.style.display = "none"
+    }
+
+    function tornarDivAjudaVisivel() {
+        const divPegaResulta = document.getElementById("pegaResultado");
+        const divGeraNumeros = document.getElementById("divGeraNumeros");
+        const divGeraRanking = document.getElementById("divRanking");
+        const divGeraAjuda = document.getElementById("divAjuda");
+        divGeraAjuda.style.display = "block";
+        divGeraNumeros.style.display = "none";
+        divGeraRanking.style.display = "none";
         divPegaResulta.style.display = "none"
     }
 }
@@ -288,7 +305,7 @@ async function gerarApostas() {
         apostasDiv.appendChild(div);
     }// fim For - aqui é gerada as apostas
 
-}//geraApostas   
+}//geraApostas    
 
 
 
@@ -305,3 +322,8 @@ function copyToClipboard() {
         .then(() => alert("Resultados copiados para a área de transferência"))
         .catch(error => console.error("Erro ao copiar resultados:", error));
 }
+
+
+
+
+
