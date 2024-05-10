@@ -14,6 +14,7 @@
         <button class="selecao" onclick="tornarDivGeraRankingVisivel()">Gera Ranking</button>
         <button class="selecao" onclick="tornarDivPegaResultadoVisivel()">Pega Resultados</button>
         <button class="selecao" onclick="baixarArquivo()">Baixa Números</button>   
+        <button id="ajuda" onclick="tornarDivAjudaVisivel()">Ajuda</button>
     </div>
 
     <div id="divGeraNumeros" class="geraNumeros">
@@ -107,6 +108,27 @@
         </div>
 
     </div>
+
+    <div id="divAjuda" class="geraNumeros" style="display: none;">        
+
+        <h2>Para gerar apostas, com base nos números mais sorteados é necessário seguir os passos abaixo:</h2>
+        <ol>
+            <li>Baixe o arquivo modelo na opção “Baixa Números”;</li>
+            <li>Veja qual o número do último sorteio armazenado;</li>
+            <li>
+                Caso esse não seja o último concurso, vá na opção “Pega Resultados” e digite o número da faixa de concursos faltantes, exemplo:
+                <ul>
+                    <li>Caso o último sorteio armazenado seja o 2720 e o último sorteio realizado seja o 2730, você deve então informar no campo “Início do Intervalo:” o número 2721 e no campo “Fim do Intervalo:” o número 2730;</li>
+                </ul>
+            </li>
+            <li>Agora clique em “Consultar” e aguarde a captura dos sorteios;</li>
+            <li>Após a captura clique em “Copiar” e depois cole no arquivo baixado no passo 1;</li>
+            <li>Informe a data inicial e a data final;</li>
+            <li>Agora é só importar o arquivo atualizado.</li>
+        </ol>
+
+    </div>
+
 
    <script src="nao_apagar/script.js"></script>
 
