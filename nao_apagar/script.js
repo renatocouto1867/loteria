@@ -1,83 +1,199 @@
-let numeros = [10, 53, 5, 37, 23, 34, 33, 30, 4, 41, 35, 42, 32, 17, 38, 11, 56, 28, 44, 27, 54, 43, 29, 16, 13, 46, 49, 51, 36, 2];
-
-function tornarDivPegaResultadoVisivel() {
-    const divPegaResulta = document.getElementById("pegaResultado");
-    const divGeraNumeros = document.getElementById("divGeraNumeros");
-    const divGeraRanking = document.getElementById("divRanking");
-    divGeraNumeros.style.display = "none";
-    divGeraRanking.style.display = "none";
-    divPegaResulta.style.display = "block"
+{//variaveis
+    let numeros = [];
+    let dataInicial, dataFinal;
 }
 
-function tornarDivGeraNumerosVisivel() {
-    const divPegaResulta = document.getElementById("pegaResultado");
-    const divGeraNumeros = document.getElementById("divGeraNumeros");
-    const divGeraRanking = document.getElementById("divRanking");
-    divGeraNumeros.style.display = "block";
-    divGeraRanking.style.display = "none";
-    divPegaResulta.style.display = "none"
+{// parte visual, exibe botões
+    function tornarDivPegaResultadoVisivel() {
+        const divPegaResulta = document.getElementById("pegaResultado");
+        const divGeraNumeros = document.getElementById("divGeraNumeros");
+        const divGeraRanking = document.getElementById("divRanking");
+        divGeraNumeros.style.display = "none";
+        divGeraRanking.style.display = "none";
+        divPegaResulta.style.display = "block"
+    }
+
+    function tornarDivGeraNumerosVisivel() {
+        const divPegaResulta = document.getElementById("pegaResultado");
+        const divGeraNumeros = document.getElementById("divGeraNumeros");
+        const divGeraRanking = document.getElementById("divRanking");
+        divGeraNumeros.style.display = "block";
+        divGeraRanking.style.display = "none";
+        divPegaResulta.style.display = "none"
+    }
+
+    function tornarDivGeraRankingVisivel() {
+        const divPegaResulta = document.getElementById("pegaResultado");
+        const divGeraNumeros = document.getElementById("divGeraNumeros");
+        const divGeraRanking = document.getElementById("divRanking");
+        divGeraNumeros.style.display = "none";
+        divGeraRanking.style.display = "block";
+        divPegaResulta.style.display = "none"
+    }
 }
 
-function tornarDivGeraRankingVisivel() {
-    const divPegaResulta = document.getElementById("pegaResultado");
-    const divGeraNumeros = document.getElementById("divGeraNumeros");
-    const divGeraRanking = document.getElementById("divRanking");
-    divGeraNumeros.style.display = "none";
-    divGeraRanking.style.display = "block";
-    divPegaResulta.style.display = "none"
-}
+{// Função que busca os resultados no site da Caixa
+    function fetchPegaResultado() {
+        if (!document.getElementById('startRange').value || !document.getElementById('endRange').value) {
+            alert('Por favor, preencha tanto o numero do concurso inicial quanto o numero do concurso final.');
+            return; // Retorna sem fazer nada se uma das datas estiver vazia
+        }
 
-let dataInicial, dataFinal;
+        const startRange = parseInt(document.getElementById("startRange").value);
+        const endRange = parseInt(document.getElementById("endRange").value);
+        const resultsDiv = document.getElementById("results");
 
-async function gerarApostas() {
-    const qtApostas = parseInt(document.getElementById("qtApostas").value);
-    const qtNumeros = parseInt(document.getElementById("qtNumeros").value);
-    const opcao = parseInt(document.getElementById("opcao").value);
-    // const atualizaNumeros = document.getElementById("atualiza").value;
+        // resultsDiv.innerHTML = "<p>Consultando resultados...</p>";
+        async function fetchData(url, concurso) {
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                //data.dataApuracao = undefined;
 
-    // if (atualizaNumeros) await openFileSelector();
-    if (document.getElementById("atualiza").checked) {
-        if (!document.getElementById('dataInicial').value || !document.getElementById('dataFinal').value) {
+                if (response.ok) {
+                    const dataSorteio = data.dataApuracao;
+                    let acumulou;
+
+                    if (data.acumulado === true) {
+                        acumulou = "sim";
+                    } else acumulou = "não";
+
+                    const dezenasSorteadas = data.listaDezenas.join(", ");
+                    const resultDiv = document.createElement('div');
+                    resultDiv.innerHTML = `Data sorteio: ${dataSorteio}; Acumulou: ${acumulou}; Número do Concurso: ${concurso}; Dezenas Sorteadas: ${dezenasSorteadas}`;
+                    resultsDiv.appendChild(resultDiv);
+                } else {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.innerHTML = `Erro ao obter resultados do concurso ${concurso}: ${data.message}`;
+                    resultsDiv.appendChild(errorDiv);
+                }
+            } catch (error) {
+                const errorDiv = document.createElement('div');
+                errorDiv.innerHTML = `Erro ao fazer requisição para o concurso ${concurso}: ${error.message}`;
+                resultsDiv.appendChild(errorDiv);
+            }
+        }
+
+        async function fetchWithRandomInterval() {
+            for (let i = startRange; i <= endRange; i++) {
+                const url = `https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena/${i}`;
+                await fetchData(url, i);
+                const randomInterval = Math.floor(Math.random() * (5000 - 2000 + 1)) + 2000; // Intervalo entre 2 e 5 segundos
+                await new Promise(resolve => setTimeout(resolve, randomInterval));
+            }
+        }
+
+        fetchWithRandomInterval();
+    }
+}//fim pega resultado
+
+function baixarArquivo() {
+    var link = document.createElement('a');
+    link.href = 'Resultados_mega_sena.txt';
+    link.download = 'Resultados_mega_sena.txt';
+    document.body.appendChild(link); // Adiciona o link ao corpo do documento
+    link.click(); // Simula um clique no link
+    document.body.removeChild(link); // Remove o link do corpo do documento após o download
+}//baixa Arquivo
+
+async function selecionaRanking() { //Seleciona o Ranking
+    if (!document.getElementById('dataInicial1').value || !document.getElementById('dataFinal1').value) {
         alert('Por favor, preencha tanto a data inicial quanto a data final.');
         return; // Retorna sem fazer nada se uma das datas estiver vazia
     }
 
-        dataInicial = new Date(document.getElementById('dataInicial').value);
-        dataFinal = new Date(document.getElementById('dataFinal').value);
-        await openFileSelector(1);
-    }
+    dataInicial = new Date(document.getElementById('dataInicial1').value);
+    dataFinal = new Date(document.getElementById('dataFinal1').value);
+    console.log(document.getElementById('dataFinal1').value)
 
 
-    const apostasDiv = document.getElementById("apostas");
+    await openFileSelector(2);
+}
 
-    apostasDiv.innerHTML = ""; // Limpar apostas anteriores
-
-    for (let i = 0; i < qtApostas; i++) {
-        const apostaSet = new Set();
-        const apostaArray = [];
-
-        while (apostaSet.size < qtNumeros) {
-            let numero;
-            if (opcao === 1 || opcao === 3) {
-                numero = numeros[Math.floor(Math.random() * numeros.length)];
-            } else if (opcao === 2 || opcao === 3) {
-                numero = Math.floor(Math.random() * 60) + 1;
+function openFileSelector(opcao) {
+    return new Promise(resolve => {
+        const fileInput = document.getElementById('fileInput');
+        const onChangeHandler = (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                lerArquivoTexto(file)
+                    .then(contagemOrdenada => {
+                        if (opcao == 1) {
+                            numeros=[];
+                            const top30MaisSorteados = criaRanking30mais(contagemOrdenada);
+                            escreveRanking30mais(top30MaisSorteados);
+                            top30MaisSorteados.forEach((contagem, numero) => {
+                                numeros.push(numero);
+                            });
+                        }
+                        if (opcao == 2) {
+                            escreveRankingGeral(contagemOrdenada);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao ler o arquivo:', error);
+                    })
+                    .finally(() => {
+                        fileInput.value = null; // Limpar o valor do input de arquivo
+                        resolve();
+                    });
             }
-            apostaSet.add(numero);
-        }
+        };
+        fileInput.addEventListener('change', onChangeHandler);
+        fileInput.click();
+    });
+}
 
-        apostaSet.forEach(numero => {
-            apostaArray.push(numero);
+
+function escreveRankingGeral(lista) {
+    let resultadoHTML = '<table>';
+    resultadoHTML += '<tr><th>Sequência</th><th>Número</th><th>Quantidade</th></tr>';
+    let sequencia = 1;
+
+    lista.forEach((contagem, numero) => {
+        resultadoHTML += `<tr><td>${sequencia}</td><td>${numero}</td><td>${contagem}</td></tr>`; // Adicionar cada número com sua contagem à tabela
+        sequencia++;
+    });
+
+    resultadoHTML += '</table>';
+
+    // Exibir a tabela do ranking completo na página
+    document.getElementById('rank').innerHTML = resultadoHTML;
+}// escreveRankingGeral
+
+{ // cria um ranking com os 30 mais sorteados
+    function criaRanking30mais(listaOrdenada) {
+        // Criar um novo Map para armazenar os 30 números mais sorteados
+        const top30MaisSorteados = new Map();
+    
+        // Iterar sobre os primeiros 30 elementos do Map ordenado
+        let contador = 0;
+        listaOrdenada.forEach((contagem, numero) => {
+            if (contador < 30) {
+                top30MaisSorteados.set(numero, contagem); // Adicionar número e contagem ao novo Map
+                contador++;
+            }
         });
-
-        const apostaString = apostaArray.sort((a, b) => a - b).join(" - ");
-        const div = document.createElement("div");
-        div.textContent = apostaString;
-        apostasDiv.appendChild(div);
+    
+        return top30MaisSorteados;
     }
-}//geraApostas       
+    
+    function escreveRanking30mais(listaNumeros) {
+        // Construir a string para exibir os 30 números mais sorteados
+        const contagemOrdenada = new Map([...listaNumeros.entries()].sort((a, b) => a[0] - b[0]));
 
-function lerArquivoTexto(arquivo) {
+        let top30HTML = "";
+        contagemOrdenada.forEach((contagem, numero) => {
+            top30HTML += numero + ", ";
+        });
+    
+        // Exibir os 30 números mais sorteados na página
+        document.getElementById('top30').innerHTML = top30HTML;
+    }
+}// cria um ranking com os 30 mais sorteados
+
+
+function lerArquivoTexto(arquivo) { // retorna um map com os numeros e a quantidade de vez que ele foi sorteado
     const leitor = new FileReader();
 
     return new Promise((resolve, reject) => {
@@ -123,120 +239,57 @@ function lerArquivoTexto(arquivo) {
 
         leitor.readAsText(arquivo);
     });
-}
+}// lerArquivoTexto
 
-function criaRanking30mais(listaOrdenada) {
-    // Criar um novo Map para armazenar os 30 números mais sorteados
-    const top30MaisSorteados = new Map();
 
-    // Iterar sobre os primeiros 30 elementos do Map ordenado
-    let contador = 0;
-    listaOrdenada.forEach((contagem, numero) => {
-        if (contador < 30) {
-            top30MaisSorteados.set(numero, contagem); // Adicionar número e contagem ao novo Map
-            contador++;
+async function gerarApostas() {
+    const qtApostas = parseInt(document.getElementById("qtApostas").value);
+    const qtNumeros = parseInt(document.getElementById("qtNumeros").value);
+    const opcao = parseInt(document.getElementById("opcao").value);
+
+    if (document.getElementById("atualiza").checked) {
+        if (!document.getElementById('dataInicial').value || !document.getElementById('dataFinal').value) {
+            alert('Por favor, preencha tanto a data inicial quanto a data final.');
+            return; // Retorna sem fazer nada se uma das datas estiver vazia
         }
-    });
 
-    return top30MaisSorteados;
-}
+        dataInicial = new Date(document.getElementById('dataInicial').value);
+        dataFinal = new Date(document.getElementById('dataFinal').value);
+        await openFileSelector(1);
+    }/////aJUSTAR.
 
-function escreveRanking30mais(listaNumeros) {
-    // Construir a string para exibir os 30 números mais sorteados
-    let top30HTML = "";
-    listaNumeros.forEach((contagem, numero) => {
-        top30HTML += numero + ", ";
-    });
 
-    // Exibir os 30 números mais sorteados na página
-    document.getElementById('top30').innerHTML = top30HTML;
-}
+    const apostasDiv = document.getElementById("apostas");
 
-function openFileSelector(opcao) {
-    return new Promise(resolve => {
-        const fileInput = document.getElementById('fileInput');
-        const onChangeHandler = (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                lerArquivoTexto(file)
-                    .then(contagemOrdenada => {
-                        if (opcao == 1) {
-                            const top30MaisSorteados = criaRanking30mais(contagemOrdenada);
-                            escreveRanking30mais(top30MaisSorteados);
-                        }
-                        if (opcao == 2) {
-                            escreveRankingGeral(contagemOrdenada);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erro ao ler o arquivo:', error);
-                    })
-                    .finally(() => {
-                        fileInput.value = null; // Limpar o valor do input de arquivo
-                        resolve();
-                    });
+    apostasDiv.innerHTML = ""; // Limpar apostas anteriores
+
+    for (let i = 0; i < qtApostas; i++) {// aqui é gerada as apostas
+        const apostaSet = new Set();
+        const apostaArray = [];
+
+        while (apostaSet.size < qtNumeros) {
+            let numero;
+            if (opcao === 1 || opcao === 3) {
+                numero = numeros[Math.floor(Math.random() * numeros.length)];
+
+            } else if (opcao === 2 || opcao === 3) {
+                numero = Math.floor(Math.random() * 60) + 1;
             }
-        };
-        fileInput.addEventListener('change', onChangeHandler);
-        fileInput.click();
-    });
-}
-
-
-
-// pegar resultado
-function fetchPegaResultado() {
-    if (!document.getElementById('startRange').value || !document.getElementById('endRange').value) {
-        alert('Por favor, preencha tanto o numero do concurso inicial quanto o numero do concurso final.');
-        return; // Retorna sem fazer nada se uma das datas estiver vazia
-    }
-
-    const startRange = parseInt(document.getElementById("startRange").value);
-    const endRange = parseInt(document.getElementById("endRange").value);
-    const resultsDiv = document.getElementById("results");
-
-    // resultsDiv.innerHTML = "<p>Consultando resultados...</p>";
-    async function fetchData(url, concurso) {
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            //data.dataApuracao = undefined;
-
-            if (response.ok) {
-                const dataSorteio = data.dataApuracao;
-                let acumulou;
-
-                if (data.acumulado === true) {
-                    acumulou = "sim";
-                } else acumulou = "não";
-
-                const dezenasSorteadas = data.dezenasSorteadasOrdemSorteio.join(", ");
-                const resultDiv = document.createElement('div');
-                resultDiv.innerHTML = `Data sorteio: ${dataSorteio}; Acumulou: ${acumulou}; Número do Concurso: ${concurso}; Dezenas Sorteadas: ${dezenasSorteadas}`;
-                resultsDiv.appendChild(resultDiv);
-            } else {
-                const errorDiv = document.createElement('div');
-                errorDiv.innerHTML = `Erro ao obter resultados do concurso ${concurso}: ${data.message}`;
-                resultsDiv.appendChild(errorDiv);
-            }
-        } catch (error) {
-            const errorDiv = document.createElement('div');
-            errorDiv.innerHTML = `Erro ao fazer requisição para o concurso ${concurso}: ${error.message}`;
-            resultsDiv.appendChild(errorDiv);
+            apostaSet.add(numero);
         }
-    }
 
-    async function fetchWithRandomInterval() {
-        for (let i = startRange; i <= endRange; i++) {
-            const url = `https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena/${i}`;
-            await fetchData(url, i);
-            const randomInterval = Math.floor(Math.random() * (5000 - 2000 + 1)) + 2000; // Intervalo entre 2 e 5 segundos
-            await new Promise(resolve => setTimeout(resolve, randomInterval));
-        }
-    }
+        apostaSet.forEach(numero => {
+            apostaArray.push(numero);
+        });
 
-    fetchWithRandomInterval();
-}
+        const apostaString = apostaArray.sort((a, b) => a - b).join(" - ");
+        const div = document.createElement("div");
+        div.textContent = apostaString;
+        apostasDiv.appendChild(div);
+    }// fim For - aqui é gerada as apostas
+
+}//geraApostas   
+
 
 
 function clearResults() {
@@ -251,57 +304,4 @@ function copyToClipboard() {
     navigator.clipboard.writeText(resultsText)
         .then(() => alert("Resultados copiados para a área de transferência"))
         .catch(error => console.error("Erro ao copiar resultados:", error));
-}
-
-// ////
-async function selecionaRanking() {
-    if (!document.getElementById('dataInicial1').value || !document.getElementById('dataFinal1').value) {
-        alert('Por favor, preencha tanto a data inicial quanto a data final.');
-        return; // Retorna sem fazer nada se uma das datas estiver vazia
-    }
-
-    dataInicial = new Date(document.getElementById('dataInicial1').value);
-    dataFinal = new Date(document.getElementById('dataFinal1').value);
-    console.log(document.getElementById('dataFinal1').value)
-
-    
-
-    await openFileSelector(2);
-}
-
-// function escreveRankingGeral(lista) {
-
-//     let resultadoHTML = '<ol>';
-//     lista.forEach((contagem, numero) => {
-//         resultadoHTML += `<li>${numero}: ${contagem}</li>`; // Adicionar cada número com sua contagem ao ranking completo
-//     });
-//     resultadoHTML += '</ol>';
-
-//     // Exibir o ranking completo na página
-//     document.getElementById('rank').innerHTML = resultadoHTML;
-// }
-
-function escreveRankingGeral(lista) {
-    let resultadoHTML = '<table>';
-    resultadoHTML += '<tr><th>Sequência</th><th>Número</th><th>Quantidade</th></tr>';
-    let sequencia = 1;
-
-    lista.forEach((contagem, numero) => {
-        resultadoHTML += `<tr><td>${sequencia}</td><td>${numero}</td><td>${contagem}</td></tr>`; // Adicionar cada número com sua contagem à tabela
-        sequencia++;
-    });
-
-    resultadoHTML += '</table>';
-
-    // Exibir a tabela do ranking completo na página
-    document.getElementById('rank').innerHTML = resultadoHTML;
-}
-
-function baixarArquivo() {
-    var link = document.createElement('a');
-    link.href = 'Resultados_mega_sena.txt';
-    link.download = 'Resultados_mega_sena.txt';
-    document.body.appendChild(link); // Adiciona o link ao corpo do documento
-    link.click(); // Simula um clique no link
-    document.body.removeChild(link); // Remove o link do corpo do documento após o download
 }
