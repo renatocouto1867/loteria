@@ -2725,3 +2725,5 @@ Data sorteio: 14/05/2024; Acumulou: sim; Número do Concurso: 2724; Dezenas Sort
 Data sorteio: 16/05/2024; Acumulou: sim; Número do Concurso: 2725; Dezenas Sorteadas: 02, 10, 32, 33, 38, 47
 Data sorteio: 18/05/2024; Acumulou: sim; Número do Concurso: 2726; Dezenas Sorteadas: 27, 45, 49, 53, 55, 59
 Data sorteio: 21/05/2024; Acumulou: sim; Número do Concurso: 2727; Dezenas Sorteadas: 04, 32, 39, 48, 51, 57
+Data sorteio: 23/05/2024; Acumulou: sim; Número do Concurso: 2728; Dezenas Sorteadas: 02, 09, 11, 25, 43, 51
+Data sorteio: 25/05/2024; Acumulou: sim; Número do Concurso: 2729; Dezenas Sorteadas: 20, 27, 41, 47, 53, 54
